@@ -27,9 +27,10 @@ Reusable, parameterized [Copilot agent](https://docs.github.com/en/copilot/conce
 ```bash
 mkdir -p your-project/.github/agents
 cp .github/agents/Spec-Importer.agent.md your-project/.github/agents/
-cp .github/agents/Spec-Exporter.agent.md your-project/.github/agents/
 cp .github/agents/Spec-Drift.agent.md    your-project/.github/agents/
 ```
+
+> **Note:** You only need to copy the agents manually the first time. After that, `@spec-importer` will automatically sync the latest agent files from the spec repo on every import.
 
 ### 2. Import specs (interactive mode — press Shift+Tab first)
 
@@ -37,7 +38,7 @@ cp .github/agents/Spec-Drift.agent.md    your-project/.github/agents/
 @spec-importer Import grounding-rules and research-agent specs from ~/curated-advisor-specs/specs/
 ```
 
-The importer collects your project-specific values (URLs, folder names, agent names) and generates the corresponding files.
+The importer collects your project-specific values (URLs, folder names, agent names) and generates the corresponding files — including a lightweight `docs/spec-driven-development.md` guide that links back to the full documentation here.
 
 ### 3. Check for drift later
 

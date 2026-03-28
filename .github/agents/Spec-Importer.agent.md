@@ -71,12 +71,73 @@ Based on the selected specs, generate or update:
 | `wizard-agent` | `.github/agents/<name>.agent.md` scaffold |
 | `doc-architecture` | `.github/copilot-instructions.md` (architecture section), create `notes/`, `docs/` folders |
 | `readme-structure` | `README.md` scaffold with TOC, agent table, collapsible structure |
+| *(always)* | `docs/spec-driven-development.md` — lightweight framework guide (see below) |
+| *(always)* | `.github/agents/Spec-Importer.agent.md`, `Spec-Drift.agent.md` — latest meta-agents from spec repo (see below) |
 
 **For each file:**
 1. Read the spec's template sections
 2. Replace all `{{VARIABLE}}` placeholders with the collected values
 3. If the file already exists, show a diff and ask if the user wants to overwrite or merge
 4. If the file doesn't exist, create it
+
+#### Always Generate: `docs/spec-driven-development.md`
+
+Regardless of which specs are selected, always generate a lightweight framework guide at `docs/spec-driven-development.md`. This file helps project contributors understand how the spec system works without needing to visit the spec repo.
+
+Use the `spec_repo` value (from `.spec-config.yaml` or user input) to build the link to full documentation. Generate the file with this structure:
+
+```markdown
+# Spec-Driven Development
+
+This project uses **spec-driven development** — a framework for importing reusable [Copilot agent](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-custom-agents) patterns from a shared spec repository.
+
+## How It Works
+
+Patterns like grounding rules, agent flows, and documentation conventions are maintained as parameterized **spec files** in a dedicated spec repo. This project imports the specs it needs, filling in project-specific values (URLs, folder names, agent names) via `{{VARIABLE}}` placeholders.
+
+## Quick Reference
+
+| Task | Command |
+|---|---|
+| **Import or re-import specs** | `@spec-importer Import specs from <path-to-specs>` |
+| **Check for drift** | `@spec-drift Compare this project against its imported specs` |
+| **Export a new pattern** | `@spec-exporter Extract <pattern> from this project` |
+
+## Key Files
+
+| File | Purpose |
+|---|---|
+| `.spec-config.yaml` | Records which specs are imported, their version, and variable values |
+| `.github/copilot-instructions.md` | Generated grounding rules and architecture (from specs) |
+| `.github/agents/*.agent.md` | Generated agent definitions (from specs) |
+
+## Variable Syntax
+
+Specs use mustache-style placeholders: `{{VARIABLE_NAME}}`. Values are stored in `.spec-config.yaml` under `variables:` and substituted during import.
+
+## Full Documentation
+
+For the complete spec format reference, FAQ, and available specs, see the spec repository:
+
+👉 **[<spec_repo> — Full Documentation](https://github.com/<spec_repo>/tree/main/docs/spec-driven-development)**
+```
+
+Replace `<spec_repo>` with the actual `spec_repo` value from the config.
+
+#### Always Sync: Meta-Agent Files
+
+Always copy the latest versions of the meta-agent files from the spec repo into the target project's `.github/agents/` folder. This ensures the project always has up-to-date agent code after each import.
+
+Derive the agent file locations from the spec path:
+- If the user provided a specs path like `~/curated-advisor-specs/specs/`, the agents are at `~/curated-advisor-specs/.github/agents/`
+- Look for `../.github/agents/` relative to the specs folder
+
+Copy these files (if they exist in the spec repo):
+1. `Spec-Importer.agent.md` — always copy (the project needs the importer for future re-imports)
+2. `Spec-Drift.agent.md` — always copy (the project needs drift detection)
+3. `Spec-Exporter.agent.md` — **only copy if it already exists in the target project** (most projects don't need the exporter; don't add it automatically)
+
+**Before overwriting**, compare the existing agent file against the spec repo version. If they differ, show the diff and note that this is an upgrade. If they are identical, skip silently.
 
 ### Step 6 — Save Config
 
@@ -100,10 +161,16 @@ variables:
 Files created/updated:
   ✅ .github/copilot-instructions.md
   ✅ .github/agents/Notes-Author.agent.md
+  ✅ .github/agents/Spec-Importer.agent.md  ← synced from spec repo
+  ✅ .github/agents/Spec-Drift.agent.md     ← synced from spec repo
   ✅ README.md
+  ✅ docs/spec-driven-development.md  ← framework guide
   ...
 
 Config saved to .spec-config.yaml
+
+📖 See docs/spec-driven-development.md for how this spec system works
+   Full docs: https://github.com/<spec_repo>/tree/main/docs/spec-driven-development
 
 To check for drift later: @spec-drift
 To re-import after spec updates: @spec-importer

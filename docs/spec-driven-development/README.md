@@ -40,7 +40,7 @@ This project uses a set of reusable patterns — grounding rules, wizard flows, 
 | Agent | Purpose |
 |---|---|
 | **`@spec-exporter`** | Reads a project's agent files, copilot-instructions, README, and notes → generates parameterized spec files to a local folder |
-| **`@spec-importer`** | Reads spec files, collects project-specific variable values, and generates/updates project files (copilot-instructions.md, agent files, README structure) |
+| **`@spec-importer`** | Reads spec files, collects project-specific variable values, and generates/updates project files (copilot-instructions.md, agent files, README structure, framework guide) |
 | **`@spec-drift`** | Compares a project's current state against its imported specs and reports divergences with actionable diffs |
 
 ## Available Specs

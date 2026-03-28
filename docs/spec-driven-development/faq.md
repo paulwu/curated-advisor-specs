@@ -72,7 +72,7 @@ Three steps:
    ```
    @spec-importer Import specs from ~/copilot-project-specs/specs/ using .spec-config.yaml
    ```
-   The importer generates `.github/copilot-instructions.md`, agent files, README sections, etc.
+   The importer generates `.github/copilot-instructions.md`, agent files, README sections, and a lightweight `docs/spec-driven-development.md` guide with a link back to the full documentation.
 
 ### What if I only want some specs?
 
@@ -105,13 +105,13 @@ cd my-new-project
 
 ### Do I need all three meta-agents in every project?
 
-No. Most projects only need `@spec-importer` (to apply specs) and optionally `@spec-drift` (to check for divergences). The `@spec-exporter` is only needed when you're developing new patterns and want to extract them into specs.
+No. Most projects only need `@spec-importer` and `@spec-drift`. The importer automatically syncs both of these from the spec repo on every import, so you only need to copy them manually once. The `@spec-exporter` is only copied if it already exists in your project — it's meant for projects where new patterns are being developed.
 
-| Agent | Who needs it |
-|---|---|
-| `@spec-importer` | Every project that uses specs |
-| `@spec-drift` | Projects that want ongoing sync checking |
-| `@spec-exporter` | Only the project(s) where patterns are developed |
+| Agent | Who needs it | Auto-synced? |
+|---|---|---|
+| `@spec-importer` | Every project that uses specs | ✅ Yes |
+| `@spec-drift` | Projects that want ongoing sync checking | ✅ Yes |
+| `@spec-exporter` | Only the project(s) where patterns are developed | Only if already present |
 
 ## Technical Details
 
@@ -127,6 +127,8 @@ Depending on which specs are imported:
 | `wizard-agent` | `.github/agents/<WizardAgent>.agent.md` (template) |
 | `doc-architecture` | `.github/copilot-instructions.md` (architecture section), `notes/`, `docs/` folders |
 | `readme-structure` | `README.md` (TOC, agent table, collapsible structure) |
+| *(always)* | `docs/spec-driven-development.md` (lightweight framework guide with link to full docs) |
+| *(always)* | `.github/agents/Spec-Importer.agent.md`, `Spec-Drift.agent.md` (synced from spec repo) |
 
 ### What's the variable syntax?
 
