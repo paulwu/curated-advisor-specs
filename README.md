@@ -50,6 +50,14 @@ curl -sL https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/.gi
 
 ### 2. Import specs (interactive mode — press Shift+Tab first)
 
+The importer auto-downloads specs from GitHub — no local clone needed:
+
+```
+@spec-importer Import grounding-rules and research-agent
+```
+
+If the agent can't reach GitHub, point it to a local clone instead:
+
 ```
 @spec-importer Import grounding-rules and research-agent specs from ~/curated-advisor-specs/specs/
 ```
