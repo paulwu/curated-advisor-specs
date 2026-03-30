@@ -70,39 +70,54 @@ The spec repo root contains a `manifest.yaml` that indexes all available specs:
 
 ```yaml
 name: copilot-project-specs
-version: "1.0.0"
+version: "2.0.0"
 description: Reusable Copilot agent patterns for documentation knowledge bases
 
 specs:
   - id: grounding-rules
     file: specs/grounding-rules.spec.md
-    version: "1.0.0"
+    version: "2.0.0"
     description: Source priority hierarchy and contradiction detection
 
-  - id: notes-conventions
-    file: specs/notes-conventions.spec.md
-    version: "1.0.0"
+  - id: research-conventions
+    file: specs/research-conventions.spec.md
+    version: "2.0.0"
     description: YAML frontmatter format and priority scale for research notes
 
   - id: wizard-agent
     file: specs/wizard-agent.spec.md
-    version: "1.0.0"
+    version: "2.0.0"
     description: Interactive wizard agent pattern with prerequisite checks
 
   - id: research-agent
     file: specs/research-agent.spec.md
-    version: "1.0.0"
+    version: "2.0.0"
     description: Research agent pattern with grounding and contradiction detection
 
   - id: doc-architecture
     file: specs/doc-architecture.spec.md
-    version: "1.0.0"
+    version: "2.0.0"
     description: Three-layer notes → docs → scripts architecture
 
   - id: readme-structure
     file: specs/readme-structure.spec.md
-    version: "1.0.0"
+    version: "2.0.0"
     description: README structure with TOC, collapsible sections, and agent table
+
+  - id: response-capture
+    file: specs/response-capture.spec.md
+    version: "2.0.0"
+    description: Response capture conventions — folder layout, filename format, metadata headers
+
+  - id: author-agent
+    file: specs/author-agent.spec.md
+    version: "2.0.0"
+    description: Research-curator agent pattern — enforces frontmatter, priority headers, naming
+
+  - id: advisor-agent
+    file: specs/advisor-agent.spec.md
+    version: "2.0.0"
+    description: Advisor agent pattern — grounded Q&A with source-cited synthesis
 ```
 
 ## Project Config (`.spec-config.yaml`)
@@ -111,12 +126,12 @@ Each project that imports specs has a `.spec-config.yaml` in its root:
 
 ```yaml
 spec_repo: paulwu/copilot-project-specs
-spec_version: "1.0.0"
+spec_version: "2.0.0"
 imported_at: "2026-03-28T06:00:00Z"
 
 imports:
   - grounding-rules
-  - notes-conventions
+  - research-conventions
   - research-agent
   - wizard-agent
   - doc-architecture
@@ -131,11 +146,11 @@ variables:
   # research-agent variables
   RESEARCH_AGENT_NAME: "Entra Researcher"
   RESEARCH_AGENT_DESCRIPTION: "Research agent grounded on official Microsoft Learn Entra Agent ID documentation."
-  RESPONSE_CAPTURE_FOLDER: "copilot-playground"
+  RESPONSE_FOLDER: "copilot-playground"
   RESPONSE_TIMEZONE: "America/Los_Angeles"
 
   # doc-architecture variables
-  RAW_RESEARCH_FOLDER: "notes"
+  KNOWLEDGE_FOLDER: "notes"
   SYNTHESIZED_DOCS_FOLDER: "docs"
   AUTOMATION_FOLDER: "scripts"
 
@@ -154,11 +169,11 @@ spec: research-agent
 version: "1.0.0"
 requires:
   - grounding-rules
-  - notes-conventions
+  - research-conventions
 ---
 ```
 
-This means the research-agent spec assumes the grounding-rules and notes-conventions patterns are also applied. The importer will warn if a required spec is not in the project's import list.
+This means the research-agent spec assumes the grounding-rules and research-conventions patterns are also applied. The importer will warn if a required spec is not in the project's import list.
 
 ## Versioning Rules
 

@@ -18,11 +18,14 @@ Standard chatbots hallucinate freely. These specs define a different model: agen
 | Spec | What It Captures |
 |---|---|
 | [`grounding-rules`](specs/grounding-rules.spec.md) | Source priority hierarchy, contradiction detection, citation format |
-| [`notes-conventions`](specs/notes-conventions.spec.md) | YAML frontmatter (`Author`, `Priority`), priority scale (1-5+) |
+| [`research-conventions`](specs/research-conventions.spec.md) | YAML frontmatter (`Author`, `Priority`), priority scale (1-5+) |
 | [`wizard-agent`](specs/wizard-agent.spec.md) | Prerequisite checks, `az account show` detection, autopilot warning, command generation |
 | [`research-agent`](specs/research-agent.spec.md) | Fetch live docs, cross-reference cached notes, flag contradictions, save response |
 | [`doc-architecture`](specs/doc-architecture.spec.md) | `notes/` → `docs/` → `scripts/` three-layer architecture |
 | [`readme-structure`](specs/readme-structure.spec.md) | README with TOC, collapsible folder tree, agent table, prerequisite warnings |
+| [`response-capture`](specs/response-capture.spec.md) | Response capture conventions — folder layout, filename format, metadata headers |
+| [`author-agent`](specs/author-agent.spec.md) | Research-curator agent pattern — enforces frontmatter, priority headers, naming |
+| [`advisor-agent`](specs/advisor-agent.spec.md) | Advisor agent pattern — grounded Q&A with source-cited synthesis |
 
 ## Quick Start
 
@@ -74,7 +77,7 @@ The importer collects your project-specific values (URLs, folder names, agent na
 
 | Project | Specs Imported |
 |---|---|
-| [agent365-management](https://github.com/paulwu/agent365-management) | All 6 specs (reference implementation) |
+| [agent365-management](https://github.com/paulwu/agent365-management) | All 9 specs (reference implementation) |
 
 ## How It Works
 

@@ -39,11 +39,14 @@ curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/
 mkdir -p specs
 curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/manifest.yaml" -o specs/manifest.yaml
 curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/grounding-rules.spec.md" -o specs/grounding-rules.spec.md
-curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/notes-conventions.spec.md" -o specs/notes-conventions.spec.md
+curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/research-conventions.spec.md" -o specs/research-conventions.spec.md
 curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/wizard-agent.spec.md" -o specs/wizard-agent.spec.md
 curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/research-agent.spec.md" -o specs/research-agent.spec.md
 curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/doc-architecture.spec.md" -o specs/doc-architecture.spec.md
 curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/readme-structure.spec.md" -o specs/readme-structure.spec.md
+curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/response-capture.spec.md" -o specs/response-capture.spec.md
+curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/author-agent.spec.md" -o specs/author-agent.spec.md
+curl -fsSL "https://raw.githubusercontent.com/paulwu/curated-advisor-specs/main/specs/advisor-agent.spec.md" -o specs/advisor-agent.spec.md
 ```
 
 Show what was downloaded:
@@ -52,7 +55,7 @@ Show what was downloaded:
   .github/agents/Spec-Exporter.agent.md
   .github/agents/Spec-Importer.agent.md
   .github/agents/Spec-Drift.agent.md
-  specs/manifest.yaml + 6 spec files
+  specs/manifest.yaml + 9 spec files
 ```
 
 If the download fails (no internet, repo not accessible), fall back to local `specs/` folder if it exists, or ask the user to provide the path manually.
@@ -86,12 +89,15 @@ Show the available specs from the manifest:
 
 ```
 Available specs:
-  1. grounding-rules (v1.0.0) — Source hierarchy and contradiction detection
-  2. notes-conventions (v1.0.0) — YAML frontmatter and priority scale
-  3. wizard-agent (v1.0.0) — Interactive wizard pattern
-  4. research-agent (v1.0.0) — Research agent with grounding
-  5. doc-architecture (v1.0.0) — Three-layer architecture
-  6. readme-structure (v1.0.0) — README layout conventions
+  1. grounding-rules (v2.0.0) — Source hierarchy and contradiction detection
+  2. research-conventions (v2.0.0) — YAML frontmatter and priority scale
+  3. wizard-agent (v2.0.0) — Interactive wizard pattern
+  4. research-agent (v2.0.0) — Research agent with grounding
+  5. doc-architecture (v2.0.0) — Three-layer architecture
+  6. readme-structure (v2.0.0) — README layout conventions
+  7. response-capture (v2.0.0) — Response capture folder layout and metadata
+  8. author-agent (v2.0.0) — Research-curator agent pattern
+  9. advisor-agent (v2.0.0) — Grounded Q&A advisor agent
 ```
 
 Ask: "Which specs do you want to import? (comma-separated numbers, or 'all')"
@@ -111,7 +117,7 @@ Based on the selected specs, generate or update:
 | Spec | Generated File(s) |
 |---|---|
 | `grounding-rules` | `.github/copilot-instructions.md` (canonical sources section) |
-| `notes-conventions` | `.github/agents/Notes-Author.agent.md` scaffold |
+| `research-conventions` | `.github/agents/Research-Curator.agent.md` scaffold |
 | `research-agent` | `.github/agents/<name>.agent.md` scaffold |
 | `wizard-agent` | `.github/agents/<name>.agent.md` scaffold |
 | `doc-architecture` | `.github/copilot-instructions.md` (architecture section), create `notes/`, `docs/` folders |
@@ -205,7 +211,7 @@ variables:
 
 Files created/updated:
   ✅ .github/copilot-instructions.md
-  ✅ .github/agents/Notes-Author.agent.md
+  ✅ .github/agents/Research-Curator.agent.md
   ✅ .github/agents/Spec-Importer.agent.md  ← synced from spec repo
   ✅ .github/agents/Spec-Drift.agent.md     ← synced from spec repo
   ✅ README.md

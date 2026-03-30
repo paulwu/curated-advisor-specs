@@ -23,7 +23,7 @@ Read these files to understand the project's patterns:
 
 For each pattern found, classify it as one of:
 - **grounding-rules** — source hierarchy, contradiction detection
-- **notes-conventions** — frontmatter format, priority scale
+- **research-conventions** — frontmatter format, priority scale
 - **wizard-agent** — prerequisite checks, input collection, command generation
 - **research-agent** — fetch, cross-reference, cite, save
 - **doc-architecture** — folder structure conventions (notes → docs → scripts)

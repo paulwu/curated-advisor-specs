@@ -15,11 +15,14 @@ This project uses a set of reusable patterns — grounding rules, wizard flows, 
 │                                                             │
 │  specs/                                                     │
 │  ├── grounding-rules.spec.md      Source hierarchy rules    │
-│  ├── notes-conventions.spec.md    Frontmatter, priority     │
+│  ├── research-conventions.spec.md Research frontmatter/priority│
 │  ├── wizard-agent.spec.md         Prerequisite/wizard flow  │
 │  ├── research-agent.spec.md       Fetch/cross-ref/cite      │
 │  ├── doc-architecture.spec.md     notes→docs→scripts layers │
-│  └── readme-structure.spec.md     TOC, collapsible, agents  │
+│  ├── readme-structure.spec.md     TOC, collapsible, agents  │
+│  ├── response-capture.spec.md     Response capture layout   │
+│  ├── author-agent.spec.md         Research-curator agent    │
+│  └── advisor-agent.spec.md        Grounded Q&A advisor      │
 │                                                             │
 │  .github/agents/                                            │
 │  ├── Spec-Exporter.agent.md       Extracts patterns → specs │
@@ -48,11 +51,14 @@ This project uses a set of reusable patterns — grounding rules, wizard flows, 
 | Spec | What It Captures |
 |---|---|
 | [grounding-rules.spec.md](./spec-format.md#grounding-rules) | Source priority hierarchy, contradiction detection, citation format |
-| [notes-conventions.spec.md](./spec-format.md#notes-conventions) | YAML frontmatter (`Author`, `Priority`), priority scale (1-5+) |
+| [research-conventions.spec.md](./spec-format.md#research-conventions) | YAML frontmatter (`Author`, `Priority`), priority scale (1-5+) |
 | [wizard-agent.spec.md](./spec-format.md#wizard-agent) | Prerequisite checks, `az account show` detection, autopilot warning, command generation |
 | [research-agent.spec.md](./spec-format.md#research-agent) | Fetch live docs, cross-reference cached notes, flag contradictions, save response |
 | [doc-architecture.spec.md](./spec-format.md#doc-architecture) | `notes/` → `docs/` → `scripts/` three-layer architecture |
 | [readme-structure.spec.md](./spec-format.md#readme-structure) | TOC, collapsible sections, agent table, prerequisite warnings |
+| [response-capture.spec.md](./spec-format.md#response-capture) | Response capture conventions — folder layout, filename format, metadata headers |
+| [author-agent.spec.md](./spec-format.md#author-agent) | Research-curator agent pattern — enforces frontmatter, priority headers, naming |
+| [advisor-agent.spec.md](./spec-format.md#advisor-agent) | Advisor agent pattern — grounded Q&A with source-cited synthesis |
 
 ## Quick Start
 

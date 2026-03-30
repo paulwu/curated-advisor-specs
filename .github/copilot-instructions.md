@@ -48,4 +48,4 @@ docs/spec-driven-development/   Framework documentation
 
 ### Variable deduplication
 
-When multiple specs share a variable (e.g., `NOTES_FOLDER` in both `grounding-rules` and `notes-conventions`), the importer collects the value once and reuses it across all specs.
+When multiple specs share a variable (e.g., `KNOWLEDGE_FOLDER` in both `grounding-rules` and `research-conventions`), the importer collects the value once and reuses it across all specs.
