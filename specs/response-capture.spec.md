@@ -1,6 +1,6 @@
 ---
 spec: response-capture
-version: "2.0.0"
+version: "2.1.0"
 description: Response capture convention for saving agent responses to timestamped markdown files
 extracted_from: paulwu/agent365-management
 requires: []
@@ -8,8 +8,8 @@ variables:
   - name: RESPONSE_FOLDER
     description: "Folder where agent responses are saved"
     required: false
-    default: "copilot-playground"
-    example: "copilot-playground"
+    default: "answers"
+    example: "answers"
   - name: RESPONSE_TIMEZONE
     description: "Timezone for response file timestamps"
     required: false
@@ -72,3 +72,11 @@ The project's agent instructions should include:
 1. A reference to the response capture folder (`{{RESPONSE_FOLDER}}/`)
 2. The file naming convention with timezone
 3. The three-section file structure requirement (Prompt / Response / Sources)
+
+### Confirmation Message
+
+After saving a response, the agent should confirm inline:
+
+```
+✅ Response saved to `{{RESPONSE_FOLDER}}/{{RESPONSE_FILENAME_PREFIX}}-YY-MM-DD-HH-MM-SS.md`
+```

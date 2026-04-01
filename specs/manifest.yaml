@@ -28,7 +28,7 @@ specs:
 
   - id: response-capture
     file: specs/response-capture.spec.md
-    version: "2.0.0"
+    version: "2.1.0"
     description: Response capture convention for saving agent responses to timestamped markdown files
 
   # --- Tier 2: Role Specs (agent behavior patterns) ---

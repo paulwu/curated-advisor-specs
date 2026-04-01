@@ -146,7 +146,7 @@ variables:
   # research-agent variables
   RESEARCH_AGENT_NAME: "Entra Researcher"
   RESEARCH_AGENT_DESCRIPTION: "Research agent grounded on official Microsoft Learn Entra Agent ID documentation."
-  RESPONSE_FOLDER: "copilot-playground"
+  RESPONSE_FOLDER: "answers"
   RESPONSE_TIMEZONE: "America/Los_Angeles"
 
   # doc-architecture variables
