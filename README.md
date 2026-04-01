@@ -1,10 +1,10 @@
 # Curated Advisor Specs
 
-A [spec-driven development](docs/spec-driven-development/README.md) framework for building **knowledge repositories with trusted, grounded AI agents** — where every answer traces back to sources you control.
+A [spec-driven development](docs/spec-driven-development/README.md) framework that implements the **Arbitrated Grounding** pattern as parameterized, importable specs — so any repository can adopt conflict-resolving, source-ranked AI agents without starting from scratch.
 
-Standard chatbots hallucinate freely. These specs define a different model: agents that follow strict source hierarchies, detect contradictions against your curated knowledge, and cite their sources — giving you far greater control over what the AI says and why. Each spec captures a battle-tested pattern (grounding rules, wizard flows, research pipelines, documentation architecture) as a parameterized template you can import into any repository.
+Each spec captures a battle-tested component of the pattern (grounding rules, research pipelines, wizard flows, documentation architecture) as a template with `{{VARIABLE}}` placeholders. Import the specs you need, fill in your project-specific values, and get grounded agents that cite their sources and flag contradictions.
 
-**The feedback loop:** Use these specs to scaffold a new knowledge repo. As you refine patterns in your project, extract the improvements back into specs here — so every repo in the ecosystem benefits.
+**The feedback loop:** As you refine patterns in your project, extract the improvements back into specs here — so every repo in the ecosystem benefits.
 
 ## The Arbitrated Grounding Pattern
 
