@@ -18,8 +18,8 @@ variables:
   - name: RESPONSE_FILENAME_PREFIX
     description: "Prefix for response filenames"
     required: false
-    default: "response"
-    example: "response"
+    default: "answer"
+    example: "answer"
 ---
 
 # Response Capture Spec

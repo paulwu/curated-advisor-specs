@@ -85,24 +85,116 @@ cat .spec-config.yaml 2>/dev/null || echo "NO_CONFIG"
 
 ### Step 3 — Select Specs to Import
 
-Show the available specs from the manifest:
+#### 3a — Parse the user's request for spec names
+
+Check whether the user named specific specs in their prompt (e.g. "import grounding-rules and readme-structure").
+
+- Extract any spec IDs or names mentioned in the prompt.
+- Validate each one against the manifest. A spec is **invalid** if it doesn't match any `id` in `manifest.yaml` (case-insensitive, hyphens vs underscores normalised).
+
+**Trigger the guided selection flow (3b) in any of these cases:**
+
+| Condition | Trigger? |
+|---|---|
+| No spec names found in the prompt | ✅ Yes |
+| One or more names don't match any manifest entry | ✅ Yes |
+| The user explicitly says "show me the list" or "which specs are available" | ✅ Yes |
+| All names are valid | ❌ No — skip to 3c |
+
+If some names are **invalid**, say so clearly before launching the guided flow:
 
 ```
-Available specs:
-  1. grounding-rules (v2.0.0) — Source hierarchy and contradiction detection
-  2. research-conventions (v2.0.0) — YAML frontmatter and priority scale
-  3. wizard-agent (v2.0.0) — Interactive wizard pattern
-  4. research-agent (v2.0.0) — Research agent with grounding
-  5. doc-architecture (v2.0.0) — Three-layer architecture
-  6. readme-structure (v2.0.0) — README layout conventions
-  7. response-capture (v2.0.0) — Response capture folder layout and metadata
-  8. author-agent (v2.0.0) — Research-curator agent pattern
-  9. advisor-agent (v2.0.0) — Grounded Q&A advisor agent
+⚠️  I couldn't find these specs: "grounding-rulz", "readme"
+    Let me show you what's available so you can pick from the list.
 ```
 
-Ask: "Which specs do you want to import? (comma-separated numbers, or 'all')"
+#### 3b — Guided multi-select
 
-Check `requires` dependencies and warn if a required spec is missing.
+Display the full spec list from the manifest, grouped by category if the manifest provides one, otherwise in the order they appear:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  Available specs  (~/arbitrated-grounding-specs/specs/)         │
+├────┬──────────────────────────┬──────────┬──────────────────────┤
+│  # │ Spec ID                  │ Version  │ Description          │
+├────┼──────────────────────────┼──────────┼──────────────────────┤
+│  1 │ grounding-rules          │ v2.0.0   │ Source hierarchy and │
+│    │                          │          │ contradiction detect. │
+│  2 │ research-conventions     │ v2.0.0   │ YAML frontmatter and │
+│    │                          │          │ priority scale        │
+│  3 │ wizard-agent             │ v2.0.0   │ Interactive wizard   │
+│    │                          │          │ pattern               │
+│  4 │ research-agent           │ v2.0.0   │ Research agent with  │
+│    │                          │          │ grounding             │
+│  5 │ doc-architecture         │ v2.0.0   │ Three-layer docs     │
+│    │                          │          │ architecture          │
+│  6 │ readme-structure         │ v2.0.0   │ README layout        │
+│    │                          │          │ conventions           │
+│  7 │ response-capture         │ v2.0.0   │ Capture folder       │
+│    │                          │          │ layout and metadata   │
+│  8 │ author-agent             │ v2.0.0   │ Research-curator     │
+│    │                          │          │ agent pattern         │
+│  9 │ advisor-agent            │ v2.0.0   │ Grounded Q&A advisor │
+│    │                          │          │ agent                 │
+└────┴──────────────────────────┴──────────┴──────────────────────┘
+
+  Enter numbers to import (examples):
+    • Single:   1
+    • Multiple: 1,3,5
+    • Range:    1-4
+    • Mixed:    1-3,7,9
+    • All:      all
+
+  Or type spec IDs directly: grounding-rules, readme-structure
+```
+
+Use `ask_user` to prompt:
+
+> "Which specs would you like to import? Enter numbers, a range (e.g. 1-4), 'all', or spec IDs:"
+
+**Parse the response:**
+
+| Input | Interpretation |
+|---|---|
+| `all` | Select every spec in the manifest |
+| `1,3,5` | Select specs at positions 1, 3, and 5 |
+| `1-4` | Select specs at positions 1 through 4 |
+| `1-3,7` | Select positions 1, 2, 3, and 7 |
+| `grounding-rules` | Match by spec ID |
+| Anything else | Re-prompt once with a hint |
+
+If the input is unrecognisable, show a short error and ask once more:
+
+```
+❓ I didn't understand "foo bar". Please enter numbers like 1,3 or a range like 1-4, or type 'all'.
+```
+
+#### 3c — Confirm the selection
+
+After resolving the final set of specs (from the prompt or from the guided flow), **always confirm** before proceeding:
+
+```
+📋 You selected 3 specs to import:
+   ✔  1. grounding-rules      (v2.0.0)
+   ✔  5. doc-architecture     (v2.0.0)
+   ✔  6. readme-structure     (v2.0.0)
+
+   Dependencies auto-added:
+   ➕  2. research-conventions (v2.0.0)  ← required by grounding-rules
+```
+
+Use `ask_user` to confirm: "Proceed with these specs? (yes / no / change)"
+
+- **yes** — continue to Step 4
+- **no** — abort and let the user know they can re-run with a different selection
+- **change** — return to the guided list (3b) with current selections pre-highlighted
+
+#### 3d — Dependency resolution
+
+After the user confirms a selection, scan each chosen spec's `requires` field in `manifest.yaml`.
+
+- For each required spec that is **not** already selected, add it automatically and note it as auto-added in the confirmation (as shown above).
+- If a required spec is not present in the manifest or the local `specs/` folder, warn the user and ask whether to continue without it or abort.
 
 ### Step 4 — Collect Variable Values
 
