@@ -22,7 +22,7 @@ variables:
     example: "answer"
 ---
 
-# Response Capture Spec
+# Answer Capture Spec
 
 ## Pattern
 
